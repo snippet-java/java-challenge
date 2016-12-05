@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <TITLE>Java Challenge</TITLE>
+  
+	<link rel="stylesheet" href="/css/codemirror/codemirror.css" />
+	<link rel="stylesheet" href="/css/style.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+	
+	<script src="/js/codemirror/codemirror.js"></script>
+	<script src="/js/codemirror/clike.js"></script>
+	<script src="/js/codemirror/matchbrackets.js"></script>
+	<script type="text/javascript" src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+	<SCRIPT TYPE="text/javascript" LANGUAGE="JavaScript" SRC="js/script.js"></SCRIPT>
+</HEAD>
+
+<BODY>
+<H2>Java Challenge Demo</H2>
+
+<P>Judging criteria: </P>
+<ol>
+	<li>Output generated - Point given if output is same or identical to answer</li>
+	<li>Process method involved - Extra point given for usage of correct/desired method</li>
+</ol>
+
+<FORM id="form">
+<H3>Replace all occurrence of character 'a' with 'o' at the give String, and print out the outcome :</H3>
+<TABLE WIDTH="100%">
+<TR>
+  <TD WIDTH="50%">Student Code</td>
+  <TD WIDTH="50%">Expected Code</td>
+</TR>
+<tr>
+	<td>
+<TEXTAREA name="text1" ID="text1" STYLE="width: 100%" ROWS=10 title="Student Code">
+public class Replace {			
+	public static void main(String[] args) {
+		
+		String text = "An Apple and a pineapple. Prefer a small apple rather than a big Pineapple.";
+		
+		String modifiedText =  "";
+		System.out.println(modifiedText);
+	}
+}
+</TEXTAREA>
+	</TD>
+	<TD>
+<TEXTAREA name="expected-text" ID="expected-text" STYLE="width: 100%" ROWS=10 title="Expected Code">
+public class Replace {			
+	public static void main(String[] args) {
+		
+		String text = "An Apple and a pineapple. Prefer a small apple rather than a big Pineapple.";
+		
+		String modifiedText =  text.replace('a', 'o');
+		System.out.println(modifiedText);
+	}
+}
+</TEXTAREA>
+	</TD>
+</tr>
+<tr>
+	<td>
+		<INPUT TYPE="button" VALUE="Try Run" id="run">
+		<INPUT TYPE="button" VALUE="Submit" id="submit">
+	</td>
+	<td><INPUT TYPE="button" VALUE="Run" id="expected-run"></td>
+</tr>
+<tr>
+	<td><DIV ID="outputdiv"></DIV></td>
+	<td><DIV ID="expected-outputdiv"></DIV></td>
+</tr>
+</TABLE>
+</FORM>
+
+
+<HR>
+
+</BODY>
+</HTML>

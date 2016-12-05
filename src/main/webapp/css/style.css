@@ -1,0 +1,68 @@
+#pef {
+	width: 100%;
+	padding: 25px;
+}
+#pef #resultSection {
+	width: 100%;
+	padding: 5px 10px !important;
+	margin-bottom: -2px !important;
+	box-sizing: border-box;
+}
+#pef div {
+	margin-bottom: 0px !important;
+}
+
+#pef form {
+	margin-bottom: 0px;
+}
+
+#pef .CodeMirror-line  {
+	box-shadow: none;
+}
+
+#pef #codeGroup {
+	width: 100%;
+	border: 1px #DDD solid;
+}
+#pef textarea {
+    font-family: Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
+}
+#pef #result {
+	display: none;
+	width: 100%;
+	padding: 10px;
+	border: 1px #DDD solid;
+	overflow-x: auto;
+	box-shadow: none;
+}
+#pef #language, #pef #codeContent, #pef #code {
+	display: none;
+}
+#pef #resultSection, #pef #submit, #pef #execute, #pef button {
+	padding: 10px;
+	display: inline-block;
+	margin: 0;
+    	border: 1px solid #ddd;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	color: #333;
+	background-color: #f9f9f9;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#f9f9f9), to(#f1f1f1));
+	background-image: -webkit-linear-gradient(top, #f9f9f9, #f1f1f1);
+	background-image: -moz-linear-gradient(top, #f9f9f9, #f1f1f1);
+	background-image: -ms-linear-gradient(top, #f9f9f9, #f1f1f1);
+	background-image: -o-linear-gradient(top, #f9f9f9, #f1f1f1);
+	background-image: linear-gradient(top, #f9f9f9, #f1f1f1);
+	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+	-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+	text-shadow: 0 1px 0 #fff;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 20px;
+	vertical-align: middle;
+	white-space: nowrap;
+	text-decoration: none;
+	cursor: pointer;
+}

@@ -1,0 +1,10 @@
+---
+applications:
+- path: target/JavaChallenge.war
+  memory: 512M
+  instances: 1
+  domain: mybluemix.net
+  name: java-challenge
+  host: java-challenge
+  disk_quota: 1024M
+  buildpack: liberty-for-java
