@@ -25,17 +25,22 @@ $(function() {
 
 
 function computeDiff() {
-	var code = $editor.getValue();
+	var studentCode = $editor.getValue();
+	var validCode = $editor2.getValue();
 	var options = {
 			url : "/eval",
 			method : "post",
-			data : {code : code}
+			dataType: "json",
+			data : {
+				playgroundCode : studentCode,
+				validCode : validCode
+			}
 	};
 	$('#outputdiv').html("<p>Submission in progress. Please wait...</p>");
 	
 	$.ajax(options)
 	.done(function(data) {
-		 $('#outputdiv').html(data);
+		 $('#outputdiv').html(data.challengeOutput);
 	})
 }
 

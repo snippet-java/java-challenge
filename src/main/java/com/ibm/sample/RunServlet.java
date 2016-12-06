@@ -5,9 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,33 +21,11 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 @WebServlet("/run")
 public class RunServlet extends HttpServlet {
-    
-    //<questionNo, answer>
-    protected static Map<String, JsonObject> answers = new HashMap<>();
-
-    //Initialize the QA set
-    static {
-    	JsonObject defAnswer = new JsonObject();
-    	defAnswer.addProperty("question", 
-    			"public class Replace {" +		
-    			"public static void main(String[] args) {" +
-    			"String text = \"An Apple and a pineapple. Prefer a small apple rather than a big Pineapple.\";" +
-    			"String modifiedText =  text.replace('a', 'o');" +
-    			"System.out.println(modifiedText);" +
-				"}" +
-				"}");
-    	defAnswer.addProperty("answer", "An Apple ond o pineopple. Prefer o smoll opple rother thon o big Pineopple.");
-    	JsonArray keywords = new JsonArray();
-    	keywords.add(".replace");
-    	defAnswer.add("keywords", keywords);
-    	answers.put("java1", defAnswer);
-    }
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

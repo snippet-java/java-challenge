@@ -14,89 +14,108 @@ import javax.servlet.http.HttpServletResponse;
 import org.bitbucket.cowwoc.diffmatchpatch.DiffMatchPatch;
 import org.bitbucket.cowwoc.diffmatchpatch.DiffMatchPatch.Diff;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 @WebServlet("/eval")
 public class EvalServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html");
+		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
 		
 		int score = 0;
+		ArrayList<String> missingTokens = new ArrayList<>();
+		JsonObject output = new JsonObject();
 		
-		String studentCode = request.getParameter("code");
-		String questionNo = "java1";
+		//todo - to capture playground and valid code & output. 
+		//check if the output contain any valid output. If no, run it here
+		//Do a diffMain to find out missing token
+		String playgroundCode = request.getParameter("playgroundCode");
+		String validCode = request.getParameter("validCode");
+		String playgroundOutput = request.getParameter("playgroundOutput");
+		String validOutput = request.getParameter("validOutput");
+//		String questionNo = "java1";
+
+		//Verify if the provided playground code containing valid output, otherwise run again to generate output
+		JsonObject studentAnswer = new JsonObject();
+		if(playgroundOutput == null || playgroundCode.isEmpty())
+			studentAnswer = RunServlet.execCode(playgroundCode);
+		else {
+			JsonParser parser = new JsonParser();
+			studentAnswer = parser.parse(playgroundOutput).getAsJsonObject();
+		}
 		
-//		String formattedText1 = textArea1.replace("\n", "").replaceAll("\\s+", "");
-//		String formattedText2 = textArea2.replace("\n", "").replaceAll("\\s+", "");
-		JsonObject studentAnswer = RunServlet.execCode(studentCode);
+		//verification on the expected code
+		JsonObject validAnswer = new JsonObject();
+		if(validOutput == null || validOutput.isEmpty())
+			validAnswer = RunServlet.execCode(validCode);
+		else {
+			JsonParser parser = new JsonParser();
+			validAnswer = parser.parse(validOutput).getAsJsonObject();
+		}
 		
 		boolean compilationError = false;
 		//if compilation error
 		if(studentAnswer == null || studentAnswer.get("err") == null || studentAnswer.get("err").getAsString().length() > 0)
 			compilationError = true;
 
-		//Matching the default answer with studentAnswer
 		if(!compilationError) {
-			if(studentAnswer.get("out").getAsString().trim().equals(
-					RunServlet.answers.get(questionNo).get("answer").getAsString().trim())) {
+			//Matching the default answer with studentAnswer
+			if(studentAnswer.get("out").getAsString().trim().equals(validAnswer.get("out").getAsString().trim())) {
 				
 				score += 50;
 			}
-		}
-		//Matching the process - to find out if expected method is used
-		JsonArray keywords = RunServlet.answers.get(questionNo).get("keywords").getAsJsonArray();
-		if(keywords.size() > 0) {
-			//if all keywords are matched, give full score, otherwise partial score
-			int matchedKeywordNo = 0;
-			for(int i=0; i < keywords.size(); i++) {
-				if(studentCode.contains(keywords.get(i).getAsString()))
-					matchedKeywordNo++;
-			}
-			//divide equally the points for each correct keypoint
-			double keywordScore = (double)50 / (double)keywords.size() * (double)matchedKeywordNo;
-			score += new Double(keywordScore).intValue();
-		}
-		//if no keyword to check, just give the another 50 score
-		else
-			score += 50;
-		
-		//Printing output
-		if(score >= 100)
-			out.println("<p><strong>Score: " + score + " - Excellent! </strong></p>");
-		//Else, display expected code and missing tokens of student code (comparing to expected code)
-		else
-		{		
+			
+			//Matching the process - to find out if expected method is used
 			DiffMatchPatch dmp =  new DiffMatchPatch();
-
-			out.println("<p><strong>Score: " + score + " </strong></p>");
-			LinkedList<Diff> textDiffList =  dmp.diffMain(studentCode, RunServlet.answers.get(questionNo).get("question").getAsString());
-			dmp.diffCleanupSemantic(textDiffList);
-	//		LinkedList<Diff> textDiffList =  dmp.diffMain(formattedText1, formattedText2);
 			
 			//Get the missing token
-			String formattedStudentCode = studentCode.replace("\n", "").replaceAll("\\s+", "");
-			String formattedExpectedCode = RunServlet.answers.get(questionNo).get("question").getAsString().replace("\n", "").replaceAll("\\s+", "");
+			String formattedStudentCode = playgroundCode.replace("\n", "").replaceAll("\\s+", "");
+			String formattedExpectedCode = validCode.replace("\n", "").replaceAll("\\s+", "");
 			LinkedList<Diff> tokenDiffList =  dmp.diffMain(formattedStudentCode, formattedExpectedCode);
-			ArrayList<String> missingTokens = new ArrayList<>();
+			dmp.diffCleanupSemantic(tokenDiffList);
 			for(Diff diff : tokenDiffList) {
-				if("insert".equalsIgnoreCase(diff.operation.name()))
-					missingTokens.add(diff.text);
+				if("insert".equalsIgnoreCase(diff.operation.name())) {
+					//split the missingToken by ;
+					String[] rawTokens = diff.text.split(";");
+					for(int i=0; i < rawTokens.length; i++) 
+						missingTokens.add(rawTokens[i]);
+				}
 			}
 			
-			out.println("<p><strong>Missing token(s): " + missingTokens.size() + "</strong>");
-			out.println("<ul>");
-			for(String token: missingTokens) {
-				out.println("<li>" + token + "</li>");
-			}
-			out.println("</ul>");
-			out.println("<p><strong>Best Answer</strong></p>");
-			out.println(dmp.diffPrettyHtml(textDiffList));
+			
+			//if there is no missing token, give another 50 points
+			if(missingTokens.size() <= 0)
+				score += 50;
 		}
+		
+		//Printing output
+		String htmlOutput = "";
+		if(compilationError)
+			htmlOutput = "<p><strong>Compilation Error. Please check again the code</strong></p>";
+		else if(score >= 100)
+			htmlOutput = "<p><strong>Score: " + score + " - Excellent! </strong></p>";
+		//Else, display expected code and missing tokens of student code (comparing to expected code)
+		else {		
+			htmlOutput += "<p><strong>Score: " + score + " </strong></p>";
+			
+			htmlOutput += "<p><strong>Missing token(s): " + missingTokens.size() + "</strong>";
+			htmlOutput += "<ul>";
+			for(String token: missingTokens) {
+				htmlOutput += "<li>" + token + "</li>";
+			}
+			htmlOutput += "</ul>";
 
+			DiffMatchPatch dmp =  new DiffMatchPatch();
+			LinkedList<Diff> textDiffList =  dmp.diffMain(playgroundCode, validCode);
+			dmp.diffCleanupSemantic(textDiffList);
+			htmlOutput += "<p><strong>Best Answer</strong></p>";
+			htmlOutput += dmp.diffPrettyHtml(textDiffList);
+		}
+		output.addProperty("challengeOutput", htmlOutput);
+		out.println(output);
 		out.close();
     }
     
