@@ -129,6 +129,11 @@ public class Replace {
 </tr>
 
 </TABLE>
+
+<div id="score-result">	
+
+</div>
+
 <!--Add Documentations process-->
 <HR>
 
@@ -209,5 +214,27 @@ public class Replace {
 </code>
 </pre>
 <hr>
+
+<script>
+$(document).ready(function(){
+	$("#score-result").hide();
+     $("#score").on('click', function (){
+         $("#score-result").text("Regex Matched : 17 , Unmatched : 1"); 
+         $("#score-result").toggle();
+         })
+});
+</script>
+
+<style>
+#score-result {
+        height: 100px;
+        width : 100%;
+        border: solid 1px;
+         border-color: lightgray;
+        padding : 10px;
+        margin-top: 10px
+    }
+</style>
+
 </BODY>
 </HTML>
