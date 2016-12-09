@@ -74,6 +74,62 @@ public class Replace {
 </FORM>
 
 
+<hr>
+</TABLE>
+<h3>Generated Regular Expressions</h3>
+
+<TABLE>   
+<tr style="text-align:center"> 
+    <th>Line No</th>
+    <th>Code</th> 
+    <th>Regex</th>
+    <th>Required?</th>
+</tr>
+<TR>
+  <TD  WIDTH="5%">1</td>
+  <TD  WIDTH="45%">public class Replace {</td>
+  <TD WIDTH="45%"><input style="width: 85%;"  type="text" name="fname" value="^public class $Replace"></td>
+  <TD WIDTH="5%"><label><input type="checkbox" id="cbox1" value="first_checkbox"></label><br></td>
+</TR>
+
+<TR>
+  <TD  WIDTH="5%">2</td>
+  <TD  WIDTH="45%">public static void main(String[] args) {	</td>
+  <TD WIDTH="45%"><input style="width: 85%;"  type="text" name="fname" value="^public static void main(String[] $args)"></td>
+  <TD WIDTH="5%"><label><input type="checkbox" id="cbox1" value="first_checkbox"></label><br></td>
+</TR>
+
+<TR>
+  <TD  WIDTH="5%">3</td>
+  <TD  WIDTH="45%">String text = "An Apple and a pineapple. Prefer a small apple rather than a big Pineapple.";</td>
+  <TD WIDTH="45%"><input style="width: 85%;"  type="text" name="fname" value="^\s* = \s* An Apple and a pineapple. Prefer a small apple rather than a big Pineapple. ;"></td>
+  <TD WIDTH="5%"><label><input type="checkbox" id="cbox1" value="first_checkbox"></label><br></td>
+</TR>
+
+<TR>
+  <TD  WIDTH="5%">4</td>
+  <TD  WIDTH="45%">String modifiedText =  text.replace('a', 'o');</td>
+  <TD WIDTH="45%"><input style="width: 85%;"  type="text" name="fname" value="^String modifiedText \s* = \s* $text.replace('a','o')"></td>
+  <TD WIDTH="5%"><label><input type="checkbox" id="cbox1" value="first_checkbox"></label><br></td>
+</TR>
+
+<TR>
+  <TD  WIDTH="5%">5</td>
+  <TD  WIDTH="45%">System.out.println(modifiedText);</td>
+  <TD WIDTH="45%"><input style="width: 85%;"  type="text" name="fname" value="^System.out.println(modifiedText);"></td>
+  <TD WIDTH="5%"><label><input type="checkbox" id="cbox1" value="first_checkbox"></label><br></td>
+</TR>
+
+
+
+<tr>
+	<td>
+		<INPUT TYPE="button" VALUE="Score" id="score">
+	</td>
+	<td></td>
+</tr>
+
+</TABLE>
 <HR>
 
 </BODY>
