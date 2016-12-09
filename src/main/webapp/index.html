@@ -4,14 +4,14 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <TITLE>Java Challenge</TITLE>
   
-	<link rel="stylesheet" href="/css/codemirror/codemirror.css" />
-	<link rel="stylesheet" href="/css/style.css" />
+	<link rel="stylesheet" href="css/codemirror/codemirror.css" />
+	<link rel="stylesheet" href="css/style.css" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
 	
-	<script src="/js/codemirror/codemirror.js"></script>
-	<script src="/js/codemirror/clike.js"></script>
-	<script src="/js/codemirror/matchbrackets.js"></script>
-	<script type="text/javascript" src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="js/codemirror/codemirror.js"></script>
+	<script src="js/codemirror/clike.js"></script>
+	<script src="js/codemirror/matchbrackets.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<SCRIPT TYPE="text/javascript" LANGUAGE="JavaScript" SRC="js/script.js"></SCRIPT>
 </HEAD>
 
@@ -130,7 +130,85 @@ public class Replace {
 </tr>
 
 </TABLE>
+<!--Add Documentations process-->
 <HR>
 
+
+ 
+
+
+<div class="container">
+	<div class="row">
+		<div style="text-align:center">
+		<h3>Word Press Code Generator</h3>
+		</div>
+		<div class="types col-md-3">
+		<h4>CHECKBOX:</h4>
+			edit(x) <br>
+			deploy(x)  <br>
+			download(x)  <br>
+			eval(x)  <br>
+			run(x)  <br>
+			allow_anonymous(x) <br>
+		</div>
+
+		<div class="types	col-md-3">
+			<h4>TEXTBOXES:</h4>
+			repo(Note:override the start code)[] <br>
+			filename[] <br>
+			height[ ]
+		</div>
+
+		<div class="types	col-md-3">
+			<h4>TEXTBOXES:</h4>
+			siteId[]  	<br>
+			courseId[]	<br>
+			playgroundId[]	<br>
+			cloudsandbox_url[]	<br>
+			eval_url[]	<br>
+		</div>
+
+		<div class="types	col-md-3">
+			<h4>TEXTBOX (Code) </h4>
+			valid { }
+		</div>
+
+		<div class="types	col-md-3">
+			<h4>TEXTBOX (Output) </h4>
+			expected { }
+		</div>
+	</div>
+</div>
+
+<div style="text-align:center">
+<h3>Template for Wordpress Code Generation</h3>
+</div>
+<pre>
+<code>	
+<em style="color: green;">
+[playground edit_mode="yes" show_deploy="yes" show_download="yes" eval_mode="yes" show_run="yes" allow_anonymous="yes"
+ repo="jazzbot-reflect-nodejs-app" filename="index.js" height="510"  
+siteId="TBD" courseId="3" playgroundId="1"  eval_url="..."]
+</em>
+
+<em style="color: green;">[valid]</em>
+public class Replace {			
+	public static void main(String[] args) {		
+		String text = "An Apple and a pineapple. Prefer a small apple rather than a big Pineapple.";		
+		String modifiedText =  text.replace('a','o');
+		System.out.println(modifiedText);
+	}
+}
+<em style="color: green;">[/valid]</em>
+
+<span style="color:green;">
+[expected]
+</span>An Apple and o pineopple. Prefer o smoll opple rother thon o big Pineopple.<em style="color:green;">
+[/expected]</em>
+
+<em style="color: green;">[/playground]</em>
+</code>
+</pre>
+<hr>
 </BODY>
 </HTML>

@@ -4,7 +4,7 @@ applications:
   memory: 512M
   instances: 1
   domain: mybluemix.net
-  name: java-challenge
-  host: java-challenge
+  name: java-challenge-regex
+  host: java-challenge-regex
   disk_quota: 1024M
   buildpack: liberty-for-java
