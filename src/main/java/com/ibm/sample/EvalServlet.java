@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -59,6 +62,8 @@ public class EvalServlet extends HttpServlet {
 			if(studentAnswer == null || studentAnswer.get("err") == null || studentAnswer.get("err").getAsString().length() > 0)
 				compilationError = true;
 	
+			
+			List<List<String>> regexOutput = null;
 			if(!compilationError) {
 				//Matching the default answer with studentAnswer
 				if(studentAnswer.get("out").getAsString().trim().equals(validAnswer.get("out").getAsString().trim())) {
@@ -87,6 +92,21 @@ public class EvalServlet extends HttpServlet {
 				//if there is no missing token, give another 50 points
 				if(missingTokens.size() <= 0)
 					score += 50;
+				
+				//TODO::
+				//Match Regular Expressions
+		        
+		        List<String> regExes = new ArrayList<String>();
+		        regExes.add("An Apple and a pineapple. Prefer a small apple rather than a big Pineapple.");
+		        regExes.add("\\s+");
+		        regExes.add("text.replace('a', 'o')");
+		        regExes.add("modifiedText");
+		        regExes.add("small Pineapple");
+		        regExes.add("text.replace('a'\\s*,\\s*'o')");
+
+		
+		        regexOutput =  evaluateRegExpressions(playgroundCode,regExes);		      
+		        System.out.println(regexOutput.toString());
 			}
 			
 			//Printing output
@@ -111,12 +131,76 @@ public class EvalServlet extends HttpServlet {
 				htmlOutput += "<p><strong>Best Answer</strong></p>";
 				htmlOutput += dmp.diffPrettyHtml(textDiffList);
 			}
+			
+			//TODO:
+			//Adding regex result 
+			
+			htmlOutput += "</br>";
+			htmlOutput += "</br>";
+			htmlOutput += "<h4> Regex Result </h4>";
+			
+			htmlOutput += "<p> Matched Regular Expressions are :  </p>";		
+			List<String> matchedRegularExpressions = regexOutput.get(0);
+			int matchedExpressoinsNo = matchedRegularExpressions.size();
+			htmlOutput += "<ul>";
+			for(String currentRegEx : matchedRegularExpressions) {
+				htmlOutput+="<li>";
+				htmlOutput+=currentRegEx;
+				htmlOutput+="</li>";					
+			}
+			htmlOutput += "</ul>";
+			
+			htmlOutput += "<p> Un-Matched Regular Expressions are :  </p>";		
+			List<String> unMatchedRegularExpressions = regexOutput.get(1);
+			int unMatchedExpressoinsNo = unMatchedRegularExpressions.size();
+			htmlOutput += "<ul>";
+			for(String currentRegEx : unMatchedRegularExpressions) {
+				htmlOutput+="<li>";
+				htmlOutput+=currentRegEx;
+				htmlOutput+="</li>";					
+			}
+			htmlOutput += "</ul>";
+			
+			System.out.println("Number of matchedExpressoinsNo are "+matchedExpressoinsNo);
+			System.out.println("Number of unmatched are "+unMatchedExpressoinsNo);
+			float percentageOfMatchedRegExpressions =  ((float) (matchedExpressoinsNo)/ (matchedExpressoinsNo + unMatchedExpressoinsNo) ) * 100;
+			htmlOutput+="</br>";
+			htmlOutput+= "<h4> Percentage of matched regular expressions are "+(percentageOfMatchedRegExpressions)+"</h4>";
+
+			
 		} catch (Exception e) {
 			htmlOutput += "Exception caught: " + e.getMessage();
 		}
 		output.addProperty("challengeOutput", htmlOutput);
 		out.println(output);
 		out.close();
+    }
+    
+    public  List<List<String>> evaluateRegExpressions(String codeSnippet , List<String> regExpressions) {  
+    	
+    	List<List<String>> evaluatedRegEx = new ArrayList<List<String>>();    	
+    	List<String> matchedRegExpressions = new ArrayList<String>();
+    	List<String> unMatchedRegExpressions = new ArrayList<String>();
+    	
+    	for(String currentRegEx : regExpressions) {
+    		Pattern currentRegPattern = Pattern.compile(currentRegEx);
+    		Matcher matcher = currentRegPattern.matcher(codeSnippet);
+    		//If the regEx is machined with student code    		
+    		if(matcher.find()){
+    			System.out.println(currentRegEx + "Matched");
+        		//add to matched array
+    			matchedRegExpressions.add(currentRegEx);
+    		}else {
+    			System.out.println(currentRegEx + "Not Matched");
+    			//add to unmatched array
+    			unMatchedRegExpressions.add(currentRegEx);
+    		}
+    	}    	   	
+    	
+    	evaluatedRegEx.add(matchedRegExpressions);
+    	evaluatedRegEx.add(unMatchedRegExpressions);
+    	
+		return evaluatedRegEx;    	
     }
     
     private static final long serialVersionUID = 1L;
