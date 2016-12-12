@@ -146,43 +146,123 @@ public class Replace {
 		<div style="text-align:center">
 		<h3>Word Press Code Generator</h3>
 		</div>
-		<div class="types col-md-3">
-		<h4>CHECKBOX:</h4>
-			edit(x) <br>
-			deploy(x)  <br>
-			download(x)  <br>
-			eval(x)  <br>
-			run(x)  <br>
-			allow_anonymous(x) <br>
+		<div class="types col-md-6">
+
+			<table>
+				<tr>
+					<td>edit</td>
+					<td><input type="checkbox"  id="edit_checkbox" name="edit_checkbox"> <br></td>
+				</tr>
+				<tr>
+					<td>deploy</td>
+					<td><input type="checkbox"  id="deploy_checkbox" name="deploy_checkbox"> <br></td>
+				</tr>
+				<tr>
+					<td>download</td>
+					<td><input type="checkbox"  id="download_checkbox" name="download_checkbox"> <br></td>
+				</tr>
+				<tr>
+					<td>eval</td>
+					<td><input type="checkbox"  id="eval_checkbox" name="eval_checkbox"> <br></td>
+				</tr>
+				<tr>
+					<td>run</td>
+					<td><input type="checkbox"  id="run_checkbox" name="run_checkbox"> <br></td>
+				</tr>
+				<tr>
+					<td>allow_anonymous</td>
+					<td><input type="checkbox"  id="allow_anonymous_checkbox" name="allow_anonymous_checkbox"> <br></td>
+				</tr>
+			</table>
+
+
 		</div>
 
-		<div class="types	col-md-3">
-			<h4>TEXTBOXES:</h4>
-			repo(Note:override the start code)[] <br>
-			filename[] <br>
-			height[ ]
+		<div class="types	col-md-6">
+			<table>
+				<tr>
+					<td>repo(Note:override the start code)</td>
+					<td><input type="text" id="value_text"  name="value_text" value=""> <br></td>
+				</tr>
+				<tr>
+					<td>filename</td>
+					<td><input type="text" id="filename_text" name="filename_text"> <br></td>
+				</tr>
+				<tr>
+					<td>height</td>
+					<td><input type="text" id="height_text" name="height_text"> <br></td>
+				</tr>
+
+				<tr>
+					<td>siteId</td>
+					<td><input type="text" id="siteId_text" name="siteId_text"> <br></td>
+				</tr>
+				<tr>
+					<td>courseId</td>
+					<td><input type="text" id="courseId_text" name="courseId_text"> <br></td>
+				</tr>
+				<tr>
+					<td>playgroundId</td>
+					<td><input type="text" id="playgroundId_text" name="playgroundId_text"> <br></td>
+				</tr>
+				<tr>
+					<td>cloudsandbox_url</td>
+					<td><input type="text" id="cloudsandbox_url_text" name="cloudsandbox_url_text"> <br></td>
+				</tr>
+				<tr>
+					<td>eval_url</td>
+					<td><input type="text" id="eval_url_text" id="eval_url_text"> <br></td>
+				</tr>
+			</table>	
+		</div>
+		</div>
+		<br>
+		 <br>
+		<div class="row">
+			<div class="types	col-md-6">
+			valid :
+			<textarea rows="4" cols="50" name="valid_textarea" id = "valid_textarea">
+			public class Replace {			
+				public static void main(String[] args) {
+					
+					String text = "An Apple and a pineapple. Prefer a small apple rather than a big Pineapple.";
+					
+					String modifiedText =  "";
+					System.out.println(modifiedText);
+				}
+			}
+			</textarea>
 		</div>
 
-		<div class="types	col-md-3">
-			<h4>TEXTBOXES:</h4>
-			siteId[]  	<br>
-			courseId[]	<br>
-			playgroundId[]	<br>
-			cloudsandbox_url[]	<br>
-			eval_url[]	<br>
+		<div class="types	col-md-6">
+			expected :
+			<textarea rows="4" cols="50" name="expected_textarea" id = "expected_textarea">
+			public class Replace {			
+				public static void main(String[] args) {
+					
+					String text = "An Apple and a pineapple. Prefer a small apple rather than a big Pineapple.";
+					
+					String modifiedText =  "";
+					System.out.println(modifiedText);
+				}
+			}
+			</textarea>
+<br>
+<br>
+			
+		</div>
+		<input type="submit" value="Generate Wordpress Code">
 		</div>
 
-		<div class="types	col-md-3">
-			<h4>TEXTBOX (Code) </h4>
-			valid { }
-		</div>
-
-		<div class="types	col-md-3">
-			<h4>TEXTBOX (Output) </h4>
-			expected { }
-		</div>
+		
+	</div>	
+		
 	</div>
+	
+	
+
 </div>
+
 
 <div style="text-align:center">
 <h3>Template for Wordpress Code Generation</h3>
