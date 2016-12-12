@@ -34,9 +34,4 @@ public class CodeSnippetRegExWrapper {
 		return "CodeSnippetRegExWrapper [codeSnippetLine=" + codeSnippetLine + ", codeSnippetRegularExpressions="
 				+ codeSnippetRegularExpressions.toString() + "]";
 	}
-	
-	
-	
-	
-
 }

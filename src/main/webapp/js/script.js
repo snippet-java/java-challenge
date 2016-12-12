@@ -21,7 +21,29 @@ $(function() {
 	$("#submit").click(computeDiff);
 	$("#run").click(testRun);
 	$("#expected-run").click(expectedRun);
+	$("#generate-reg-expressions").click(generateRegulaExpressions);
 })
+
+function generateRegulaExpressions() {
+	var validCode = $editor2.getValue();
+	var options = {
+			url : "/generate-regular-expressions",
+			method : "get",
+			dataType: "json",
+			//dataType:"html",
+			data : {validCode : validCode}
+	}
+
+	    $('#genereate-regex-output-div').html("<p>Submission in progress. Please wait...</p>");
+	
+		$.ajax(options)
+		.done(function(data) {
+			$('#genereate-regex-output-div').html(data.generatedRegularExpressions);
+			//$('#genereate-regex-output-div').html(JSON.stringify(data.generatedRegularExpressions,null,2));
+			//$('#genereate-regex-output-div').html(data.htmlOutput);
+		})
+};
+
 
 
 function computeDiff() {

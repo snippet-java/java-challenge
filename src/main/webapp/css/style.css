@@ -66,3 +66,33 @@
 	text-decoration: none;
 	cursor: pointer;
 }
+
+#genereate-regex-output-div {
+	width:50%;
+	height:200px;
+	border : solid;
+}
+
+#checkbox-table > tr {
+	width: 100%
+}
+
+.form-check-inline {
+width:33%;
+}
+
+
+
+#repo-name-div ,#site-id-div , #file-name-div , #course-id-div{ 
+	padding-right: 30px;
+	padding-left:0px
+}
+
+#height-div , #playground-id-div{
+	padding-left:0px;
+	padding-right: 0px;
+}
+
+table.borderless td,table.borderless th{
+     border: none !important;
+}
